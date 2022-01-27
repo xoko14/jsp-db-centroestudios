@@ -1,5 +1,8 @@
 <html>
 <body>
-<h2>Hello World!</h2>
+    <form method="POST">
+        <input type="text" name="nombre">
+        <input type="password" name="contraseña">
+    </form>
 </body>
 </html>
