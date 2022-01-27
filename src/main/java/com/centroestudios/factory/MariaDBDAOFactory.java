@@ -31,8 +31,11 @@ public class MariaDBDAOFactory extends DAOFactory{
 
     public MariaDBDAOFactory() {
         try {
+            Class.forName("org.mariadb.jdbc.Driver");
             bcp = BasicConnectionPool.create(url, user, password);
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
