@@ -25,8 +25,6 @@ public abstract class DAOFactory {
     
     public abstract boolean createDB();
     public abstract boolean clearDB();
-    public abstract boolean volcarDB(Connection conn, String location);
-    public abstract boolean cargarVolcadoDB(Connection conn, String location);
 
 
     public static DAOFactory getDAOFactory(int whichFactory) {

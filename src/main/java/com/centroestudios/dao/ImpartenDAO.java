@@ -9,10 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.centroestudios.dao.ImpartenDAO.Imparten;
-import com.centroestudios.util.ExceptionHandler;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class ImpartenDAO implements Dao<Imparten> {
 
@@ -37,24 +33,9 @@ public class ImpartenDAO implements Dao<Imparten> {
                 lista.add(item);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
-    }
-
-    @Override
-    public JSONObject toJSON(Connection conn) {
-        JSONArray jsonArr = new JSONArray();
-        List<Imparten> list = this.getAll(conn);
-        list.forEach(item -> {
-            JSONObject obj = new JSONObject();
-            obj.put("profesor", item.getProfesor());
-            obj.put("asignatura", item.getAsignatura());
-            obj.put("alumno", item.getAlumno());
-            obj.put("curso", item.getCurso());
-            jsonArr.put(obj);
-        });
-        return new JSONObject().put("imparten", jsonArr);
     }
 
     @Override
@@ -70,22 +51,8 @@ public class ImpartenDAO implements Dao<Imparten> {
             }
             s.executeBatch();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Imparten> getJSON(JSONArray arr) {
-        List<Imparten> list = new ArrayList<>();
-        arr.forEach(o -> {
-            Imparten item = new Imparten();
-            item.setProfesor(((JSONObject) o).getInt("profesor"));
-            item.setAsignatura(((JSONObject) o).getInt("asignatura"));
-            item.setAlumno(((JSONObject) o).getInt("alumno"));
-            item.setCurso(((JSONObject) o).getInt("curso"));
-            list.add(item);
-        });
-        return list;
     }
 
     class Imparten {

@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.centroestudios.util.ExceptionHandler;
 import com.centroestudios.vo.Asignatura;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class AsignaturaDAO implements Dao<Asignatura> {
 
@@ -28,7 +24,7 @@ public class AsignaturaDAO implements Dao<Asignatura> {
             asig.setNombre(rs.getString("nombre"));
 
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return asig;
     }
@@ -46,7 +42,7 @@ public class AsignaturaDAO implements Dao<Asignatura> {
                 lista.add(asig);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -64,7 +60,7 @@ public class AsignaturaDAO implements Dao<Asignatura> {
                 lista.add(asig);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -82,7 +78,7 @@ public class AsignaturaDAO implements Dao<Asignatura> {
                 lista.add(asig);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -100,22 +96,9 @@ public class AsignaturaDAO implements Dao<Asignatura> {
                 lista.add(asig);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
-    }
-
-    @Override
-    public JSONObject toJSON(Connection conn) {
-        JSONArray jsonArr = new JSONArray();
-        List<Asignatura> list = this.getAll(conn);
-        list.forEach(item -> {
-            JSONObject obj = new JSONObject();
-            obj.put("id", item.getId());
-            obj.put("nombre", item.getNombre());
-            jsonArr.put(obj);
-        });
-        return new JSONObject().put("asignaturas", jsonArr);
     }
 
     @Override
@@ -129,20 +112,8 @@ public class AsignaturaDAO implements Dao<Asignatura> {
             }
             s.executeBatch();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Asignatura> getJSON(JSONArray arr) {
-        List<Asignatura> list = new ArrayList<>();
-        arr.forEach(o -> {
-            Asignatura item = new Asignatura();
-            item.setId(((JSONObject) o).getInt("id"));
-            item.setNombre(((JSONObject) o).getString("nombre"));
-            list.add(item);
-        });
-        return list;
     }
 
     public void newAsignatura(Connection conn, String nombre){
@@ -152,7 +123,7 @@ public class AsignaturaDAO implements Dao<Asignatura> {
             s.setString(1, nombre);
             s.executeUpdate();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
     }
 }

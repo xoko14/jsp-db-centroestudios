@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.centroestudios.util.ExceptionHandler;
 import com.centroestudios.vo.Profesor;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class ProfesorDAO implements Dao<Profesor> {
     public static String ROW_NOMBRE = "nombre";
@@ -34,7 +30,7 @@ public class ProfesorDAO implements Dao<Profesor> {
             pro.setDepartamento(rs.getString("departamento"));
             pro.setDepartamentoId(rs.getInt("id_departamento"));
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return pro;
     }
@@ -56,7 +52,7 @@ public class ProfesorDAO implements Dao<Profesor> {
                 lista.add(pro);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -78,7 +74,7 @@ public class ProfesorDAO implements Dao<Profesor> {
                 lista.add(pro);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -100,25 +96,9 @@ public class ProfesorDAO implements Dao<Profesor> {
                 lista.add(pro);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
-    }
-
-    @Override
-    public JSONObject toJSON(Connection conn) {
-        JSONArray jsonArr = new JSONArray();
-        List<Profesor> list = this.getAll(conn);
-        list.forEach(item -> {
-            JSONObject obj = new JSONObject();
-            obj.put("id", item.getId());
-            obj.put("dni", item.getDni());
-            obj.put("nombre", item.getNombre());
-            obj.put("apellidos", item.getApellidos());
-            obj.put("departamento", item.getDepartamentoId());
-            jsonArr.put(obj);
-        });
-        return new JSONObject().put("profesores", jsonArr);
     }
 
     @Override
@@ -135,23 +115,8 @@ public class ProfesorDAO implements Dao<Profesor> {
             }
             s.executeBatch();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Profesor> getJSON(JSONArray arr) {
-        List<Profesor> list = new ArrayList<>();
-        arr.forEach(o -> {
-            Profesor item = new Profesor();
-            item.setId(((JSONObject) o).getInt("id"));
-            item.setDni(((JSONObject) o).getString("dni"));
-            item.setNombre(((JSONObject) o).getString("nombre"));
-            item.setApellidos(((JSONObject) o).getString("apellidos"));
-            item.setDepartamentoId(((JSONObject) o).getInt("departamento"));
-            list.add(item);
-        });
-        return list;
     }
 
     public void newProfesor(Connection conn, String dni, String nombre, String apellidos, int departamento){
@@ -164,7 +129,7 @@ public class ProfesorDAO implements Dao<Profesor> {
             s.setInt(4, departamento);
             s.executeUpdate();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
     }
 

@@ -9,11 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.centroestudios.util.ExceptionHandler;
 import com.centroestudios.vo.Alumno;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class AlumnoDAO implements Dao<Alumno> {
     public static String ROW_NOMBRE = "nombre";
@@ -33,7 +29,7 @@ public class AlumnoDAO implements Dao<Alumno> {
             al.setApellidos(rs.getString("apellidos"));
             al.setFecha(rs.getDate("fecha_nac"));
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return al;
     }
@@ -54,7 +50,7 @@ public class AlumnoDAO implements Dao<Alumno> {
                 lista.add(al);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -75,7 +71,7 @@ public class AlumnoDAO implements Dao<Alumno> {
                 lista.add(al);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -96,7 +92,7 @@ public class AlumnoDAO implements Dao<Alumno> {
                 lista.add(al);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -117,7 +113,7 @@ public class AlumnoDAO implements Dao<Alumno> {
                 lista.add(al);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -139,7 +135,7 @@ public class AlumnoDAO implements Dao<Alumno> {
                 lista.add(al);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -160,22 +156,6 @@ public class AlumnoDAO implements Dao<Alumno> {
     }
 
     @Override
-    public JSONObject toJSON(Connection conn) {
-        JSONArray jsonArr = new JSONArray();
-        List<Alumno> list = this.getAll(conn);
-        list.forEach(item -> {
-            JSONObject obj = new JSONObject();
-            obj.put("num_exp", item.getNumExp());
-            obj.put("dni", item.getDni());
-            obj.put("nombre", item.getNombre());
-            obj.put("apellidos", item.getApellidos());
-            obj.put("fecha_nac", item.getFecha().toString());
-            jsonArr.put(obj);
-        });
-        return new JSONObject().put("alumnos", jsonArr);
-    }
-
-    @Override
     public void batchInsert(Connection conn, List<Alumno> list) {
         try {
             PreparedStatement s = conn.prepareStatement("insert into alumnos values (?, ?, ?, ?, ?)");
@@ -189,23 +169,8 @@ public class AlumnoDAO implements Dao<Alumno> {
             }
             s.executeBatch();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Alumno> getJSON(JSONArray arr) {
-        List<Alumno> list = new ArrayList<>();
-        arr.forEach(o -> {
-            Alumno item = new Alumno();
-            item.setNumExp(((JSONObject) o).getInt("num_exp"));
-            item.setDni(((JSONObject) o).getString("dni"));
-            item.setNombre(((JSONObject) o).getString("nombre"));
-            item.setApellidos(((JSONObject) o).getString("apellidos"));
-            item.setFecha(Date.valueOf(((JSONObject) o).getString("fecha_nac")));
-            list.add(item);
-        });
-        return list;
     }
 
 }

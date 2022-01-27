@@ -8,11 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.centroestudios.util.ExceptionHandler;
 import com.centroestudios.vo.Departamento;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class DepartamentoDAO implements Dao<Departamento> {
 
@@ -29,7 +25,7 @@ public class DepartamentoDAO implements Dao<Departamento> {
             dept.setNumProf(rs.getInt("num_prof"));
 
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return dept;
     }
@@ -48,7 +44,7 @@ public class DepartamentoDAO implements Dao<Departamento> {
                 lista.add(dept);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -67,7 +63,7 @@ public class DepartamentoDAO implements Dao<Departamento> {
                 lista.add(dept);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
     }
@@ -86,22 +82,9 @@ public class DepartamentoDAO implements Dao<Departamento> {
                 lista.add(dept);
             }
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
         return lista;
-    }
-
-    @Override
-    public JSONObject toJSON(Connection conn) {
-        JSONArray jsonArr = new JSONArray();
-        List<Departamento> list = this.getAll(conn);
-        list.forEach(item -> {
-            JSONObject obj = new JSONObject();
-            obj.put("id", item.getId());
-            obj.put("nombre", item.getNombre());
-            jsonArr.put(obj);
-        });
-        return new JSONObject().put("departamentos", jsonArr);
     }
 
     @Override
@@ -115,20 +98,8 @@ public class DepartamentoDAO implements Dao<Departamento> {
             }
             s.executeBatch();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
-    }
-
-    @Override
-    public List<Departamento> getJSON(JSONArray arr) {
-        List<Departamento> list = new ArrayList<>();
-        arr.forEach(o -> {
-            Departamento item = new Departamento();
-            item.setId(((JSONObject) o).getInt("id"));
-            item.setNombre(((JSONObject) o).getString("nombre"));
-            list.add(item);
-        });
-        return list;
     }
 
     public void newDepartamento(Connection conn, String nombre){
@@ -138,7 +109,7 @@ public class DepartamentoDAO implements Dao<Departamento> {
             s.setString(1, nombre);
             s.executeUpdate();
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
     }
 

@@ -18,11 +18,8 @@ import com.centroestudios.dao.DepartamentoDAO;
 import com.centroestudios.dao.ImpartenDAO;
 import com.centroestudios.dao.ProfesorDAO;
 import com.centroestudios.pool.BasicConnectionPool;
-import com.centroestudios.util.ExceptionHandler;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class MariaDBDAOFactory extends DAOFactory{
     final static String url = "jdbc:mariadb://localhost/centro_estudios";
@@ -36,7 +33,7 @@ public class MariaDBDAOFactory extends DAOFactory{
         try {
             bcp = BasicConnectionPool.create(url, user, password);
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
         }
     }
 
@@ -91,7 +88,7 @@ public class MariaDBDAOFactory extends DAOFactory{
             Reader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/sql/init_db.sql")));
             sr.runScript(reader);
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
             return false;
         }
         return true;
@@ -107,80 +104,8 @@ public class MariaDBDAOFactory extends DAOFactory{
             Reader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/sql/clear_db.sql")));
             sr.runScript(reader);
         } catch (SQLException e) {
-            ExceptionHandler.handle(e);
+            e.printStackTrace();
             return false;
-        }
-        return true;
-    }
-
-    /**
-     * Volca os contidos das táboas a arquivos JSON.
-     */
-    @Override
-    public boolean volcarDB(Connection conn, String location) {
-        Writer writer;
-        try {
-            writer = new FileWriter(Paths.get(location, "alumnos.json").toFile());
-            this.getAlumnoDAO().toJSON(conn).write(writer);
-            writer.flush();
-            writer.close();
-            
-            writer = new FileWriter(Paths.get(location.toString(), "departamentos.json").toFile());
-            this.getDepartamentoDAO().toJSON(conn).write(writer);
-            writer.flush();
-            writer.close();
-
-            writer = new FileWriter(Paths.get(location.toString(), "profesores.json").toFile());
-            this.getProfesorDAO().toJSON(conn).write(writer);
-            writer.flush();
-            writer.close();
-
-            writer = new FileWriter(Paths.get(location.toString(), "asignaturas.json").toFile());
-            this.getAsignaturaDAO().toJSON(conn).write(writer);
-            writer.flush();
-            writer.close();
-
-            writer = new FileWriter(Paths.get(location.toString(), "imparten.json").toFile());
-            impartenDAO.toJSON(conn).write(writer);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            ExceptionHandler.handle(e);
-        }
-        return true;
-    }
-
-    /**
-     * Carga o volcado desde arquivos JSON.
-     */
-    @Override
-    public boolean cargarVolcadoDB(Connection conn, String location) {
-        String content;
-        try {
-            content = Files.readString(Paths.get(location, "alumnos.json"), StandardCharsets.UTF_8);
-            JSONArray als = new JSONObject(content).getJSONArray("alumnos");
-            getAlumnoDAO().batchInsert(getConnection(), getAlumnoDAO().getJSON(als));
-
-            content = Files.readString(Paths.get(location, "asignaturas.json"), StandardCharsets.UTF_8);
-            JSONArray asig = new JSONObject(content).getJSONArray("asignaturas");
-            getAsignaturaDAO().batchInsert(getConnection(), getAsignaturaDAO().getJSON(asig));
-
-            content = Files.readString(Paths.get(location, "departamentos.json"), StandardCharsets.UTF_8);
-            JSONArray depts = new JSONObject(content).getJSONArray("departamentos");
-            getDepartamentoDAO().batchInsert(getConnection(), getDepartamentoDAO().getJSON(depts));
-
-            content = Files.readString(Paths.get(location, "profesores.json"), StandardCharsets.UTF_8);
-            JSONArray profs = new JSONObject(content).getJSONArray("profesores");
-            getProfesorDAO().batchInsert(getConnection(), getProfesorDAO().getJSON(profs));
-
-            content = Files.readString(Paths.get(location, "imparten.json"), StandardCharsets.UTF_8);
-            JSONArray imp = new JSONObject(content).getJSONArray("imparten");
-            impartenDAO.batchInsert(getConnection(), impartenDAO.getJSON(imp));
-        } catch (IOException e) {
-            ExceptionHandler.handle(e);
-            return false;
-        } catch (SQLException e) {
-            ExceptionHandler.handle(e);
         }
         return true;
     }
