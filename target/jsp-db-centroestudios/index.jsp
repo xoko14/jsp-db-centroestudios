@@ -16,6 +16,9 @@
 <h2>Hello World!</h2>
 <button id="tables" onclick="execute('backscript-loader', 'functions/initDB.jsp')" type="button" class="btn btn-primary">Click On Me</button>
 <a href="views/alumno.jsp" class="btn btn-primary" type="button">Ver los alumnos</a>
+<a href="views/asignatura.jsp" class="btn btn-primary" type="button">Ver los alumnos</a>
+<a href="views/departamento.jsp" class="btn btn-primary" type="button">Ver los alumnos</a>
+<a href="views/profesor.jsp" class="btn btn-primary" type="button">Ver los alumnos</a>
 <iframe id="backscript-loader" style="visibility: hidden"></iframe>
 
 <!-- Bootstrap -->
