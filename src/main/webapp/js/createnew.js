@@ -27,3 +27,15 @@ function newProfesor(){
         execute("backscript-loader", `../submit/profesor.jsp?dni=${dni}&nombre=${nombre}&apellidos=${apellidos}&dept=${dept}`)
     }
 }
+
+function newAlumno(){
+    var dni = document.getElementById("dni").value
+    var nombre = document.getElementById("nombre").value
+    var apellidos = document.getElementById("apellidos").value
+    var date = document.getElementById("date").value
+    if(nombre == "" || dni == "" || apellidos == "" || !date.match(new RegExp("\\d\\d\\d\\d-\\d\\d-\\d\\d"))){
+        execute("backscript-loader", `../submit/datosblanco.jsp`)
+    } else {
+        execute("backscript-loader", `../submit/alumno.jsp?dni=${dni}&nombre=${nombre}&apellidos=${apellidos}&fecha=${date}`)
+    }
+}
