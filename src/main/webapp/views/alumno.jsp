@@ -13,36 +13,56 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="../js/createnew.js"></script>
     <script src="../js/backscript.js"></script>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 </head>
 <body>
 <%!DAOFactory daoFactory = Database.getMariaDBDAOFactory();%>
 
-<h2>Hello World!</h2>
-<table class="table table-striped table-hover">
-    <thead>
-    <tr>
-        <td>Num. Expediente</td>
-        <td>DNI</td>
-        <td>Nombre</td>
-        <td>Apellidos</td>
-        <td>Fecha de nacimmiento</td>
-    </tr>
-    </thead>
-    <tbody>
-    <%
-        List<Alumno> als = daoFactory.getAlumnoDAO().getAll(daoFactory.getConnection());
-        for (Alumno al : als) {
-            out.print("<tr>" +
-                    "<td>" + al.getNumExp() + "</td>" +
-                    "<td>" + al.getDni() + "</td>" +
-                    "<td>" + al.getNombre() + "</td>" +
-                    "<td>" + al.getApellidos() + "</td>" +
-                    "<td>" + al.getFecha() + "</td>" +
-                    "</tr>");
-        }%>
-    </tbody>
-</table>
-<div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../"><span class="material-icons">school</span>  Centro Estudios</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="../views/alumno.jsp">Alumnos</a>
+                <a class="nav-link" href="../views/profesor.jsp">Profesores</a>
+                <a class="nav-link" href="../views/asignatura.jsp">Asignaturas</a>
+                <a class="nav-link" href="../views/departamento.jsp">Departamentos</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <br>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <td>Num. Expediente</td>
+            <td>DNI</td>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>Fecha de nacimmiento</td>
+        </tr>
+        </thead>
+        <tbody>
+        <%
+            List<Alumno> als = daoFactory.getAlumnoDAO().getAll(daoFactory.getConnection());
+            for (Alumno al : als) {
+                out.print("<tr>" +
+                        "<td>" + al.getNumExp() + "</td>" +
+                        "<td>" + al.getDni() + "</td>" +
+                        "<td>" + al.getNombre() + "</td>" +
+                        "<td>" + al.getApellidos() + "</td>" +
+                        "<td>" + al.getFecha() + "</td>" +
+                        "</tr>");
+            }%>
+        </tbody>
+    </table>
     <form>
         <label for="nombre" class="form-label">Dar de alta</label>
         <div class="input-group mb-3">

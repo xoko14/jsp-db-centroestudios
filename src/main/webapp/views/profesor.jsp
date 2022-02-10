@@ -9,34 +9,56 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="../js/createnew.js"></script>
     <script src="../js/backscript.js"></script>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 </head>
 <body>
 <%!DAOFactory daoFactory = Database.getMariaDBDAOFactory();%>
-<table class="table table-striped table-hover">
-    <thead>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="../"><span class="material-icons">school</span>  Centro Estudios</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="../views/alumno.jsp">Alumnos</a>
+                <a class="nav-link active" href="../views/profesor.jsp">Profesores</a>
+                <a class="nav-link" href="../views/asignatura.jsp">Asignaturas</a>
+                <a class="nav-link" href="../views/departamento.jsp">Departamentos</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <br>
+    <table class="table table-striped table-hover">
+        <thead>
         <tr>
-            <td>borrar</td>
             <td>DNI</td>
             <td>Nombre</td>
             <td>Apellidos</td>
             <td>Departamento</td>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         <%
             List<Profesor> list = daoFactory.getProfesorDAO().getAll(daoFactory.getConnection());
             for(Profesor item: list){
-            out.print("<tr>"+
-                    "<td><input class=\"form-check-input\" type=\"checkbox\" id='"+item.getId()+"'></td>"+
-                    "<td>"+item.getDni()+"</td>"+
-                    "<td>"+item.getNombre()+"</td>"+
-                    "<td>"+item.getApellidos()+"</td>"+
-                    "<td>"+item.getDepartamento()+"</td>"+
-                    "</tr>");
-        }%>
-    </tbody>
-</table>
-<div>
+                out.print("<tr>"+
+                        "<td>"+item.getDni()+"</td>"+
+                        "<td>"+item.getNombre()+"</td>"+
+                        "<td>"+item.getApellidos()+"</td>"+
+                        "<td>"+item.getDepartamento()+"</td>"+
+                        "</tr>");
+            }%>
+        </tbody>
+    </table>
+
     <form>
         <label for="dni" class="form-label">Dar de alta</label>
         <div class="input-group mb-3">
