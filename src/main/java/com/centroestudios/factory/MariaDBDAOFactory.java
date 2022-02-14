@@ -96,6 +96,18 @@ public class MariaDBDAOFactory extends DAOFactory{
         }
         return true;
     }
+    public boolean insertDB() {
+        try {
+            ScriptRunner sr = new ScriptRunner(getConnection());
+            Reader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/sql/insert_values.sql")));
+            sr.runScript(reader);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * Borra as táboas da base de datos.
