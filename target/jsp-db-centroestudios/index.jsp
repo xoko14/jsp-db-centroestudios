@@ -16,7 +16,6 @@
     <link href="css/nerd-fonts-generated.css" rel="stylesheet">
 </head>
 <body>
-<%!DAOFactory daoFactory = Database.getMariaDBDAOFactory();%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
@@ -44,6 +43,7 @@
             <h6 class="card-subtitle mb-2 text-muted">Por Carlos Iglesas, David Domínguez e Xoquín Pérez</h6>
             <p class="card-text">Exemplo de visualización de datos dunha BD utilizando JSP.</p>
             <button id="tables" onclick="execute('backscript-loader', 'functions/initDB.jsp')" type="button" class="btn btn-primary">Inicializar base de datos</button>
+
         </div>
     </div>
 
