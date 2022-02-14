@@ -16,7 +16,6 @@
     <link href="css/nerd-fonts-generated.css" rel="stylesheet">
 </head>
 <body>
-<%!DAOFactory daoFactory = Database.getMariaDBDAOFactory();%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
