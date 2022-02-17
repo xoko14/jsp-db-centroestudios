@@ -1,3 +1,4 @@
+<!-- Aquí se declaran los imports de las distintas clases que usará nuestro archivo jsp para realizar las distintas operaciones -->
 <%@page import="com.centroestudios.Database" %>
 <%@page import="com.centroestudios.factory.DAOFactory" %>
 <%@ page import="com.centroestudios.vo.Profesor" %>
@@ -14,6 +15,7 @@
           rel="stylesheet">
 </head>
 <body>
+<!--Aquí se instancia el DAOFactory con un fragmento de código java inyectado-->
 <%!DAOFactory daoFactory = Database.getMariaDBDAOFactory();%>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,6 +47,7 @@
             <td>Departamento</td>
         </tr>
         </thead>
+            <!--Aquí se genera el cuerpo de la tabla de profesores dinámicamente gracias a una consulta a la bbdd desde un fragmento de código java-->
         <tbody>
         <%
             List<Profesor> list = daoFactory.getProfesorDAO().getAll(daoFactory.getConnection());
