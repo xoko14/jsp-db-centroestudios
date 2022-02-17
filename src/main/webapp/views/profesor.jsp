@@ -50,6 +50,7 @@
             <!--Aquí se genera el cuerpo de la tabla de profesores dinámicamente gracias a una consulta a la bbdd desde un fragmento de código java-->
         <tbody>
         <%
+            //Cabe destacar que antes de imprimir los datos, se consultan para que después de una inserción, tener la tabla actualizada al dar de alta un nuevo registro
             List<Profesor> list = daoFactory.getProfesorDAO().getAll(daoFactory.getConnection());
             for(Profesor item: list){
                 out.print("<tr>"+

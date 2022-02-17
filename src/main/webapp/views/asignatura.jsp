@@ -44,7 +44,8 @@
         </thead>
         <!--Aquí se genera el cuerpo de la tabla de asignaturas dinámicamente gracias a una consulta a la bbdd desde un fragmento de código java-->
         <tbody>
-        <%
+        <%            
+            //Cabe destacar que antes de imprimir los datos, se consultan para que después de una inserción, tener la tabla actualizada al dar de alta un nuevo registro
             List<Asignatura> list = daoFactory.getAsignaturaDAO().getAll(daoFactory.getConnection());
             for(Asignatura item: list){
                 out.print("<tr>"+
